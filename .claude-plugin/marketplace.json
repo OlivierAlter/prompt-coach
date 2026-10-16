@@ -1,0 +1,13 @@
+{
+  "name": "prompt-coach",
+  "description": "Prompt coach, a Claude Code mod that reviews your prompts and builds better prompting habits",
+  "owner": {
+    "name": "OlivierAlter"
+  },
+  "plugins": [
+    {
+      "name": "prompt-coach",
+      "source": "./"
+    }
+  ]
+}

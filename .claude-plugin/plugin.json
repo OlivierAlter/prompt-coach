@@ -1,0 +1,29 @@
+{
+  "name": "prompt-coach",
+  "version": "0.6.0",
+  "description": "A sidebar that reviews each prompt, tracks your prompting habits, and improves your draft before you send it",
+  "author": {
+    "name": "OlivierAlter"
+  },
+  "repository": "https://github.com/OlivierAlter/prompt-coach",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "model": {
+      "type": "string",
+      "title": "Coach model",
+      "description": "The model that reviews prompts and improves drafts",
+      "default": "sonnet",
+      "options": [
+        "sonnet",
+        "haiku",
+        "opus"
+      ]
+    },
+    "autoReview": {
+      "type": "boolean",
+      "title": "Review every prompt",
+      "description": "Review each answered prompt automatically; off, press Review it on the ones you want",
+      "default": true
+    }
+  }
+}
