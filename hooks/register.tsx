@@ -332,19 +332,28 @@ export const register: Register = (on, options) => {
       await update($, SELECTED, () => null)
       await $.store.delete(STORE_KEY)
 
-      return { text: 'Prompt coach history cleared.' }
+      return { text: 'history cleared.' }
     }
     await update($, VIEW, () => (arg === 'habits' ? 'habits' : 'review'))
     await update($, BAND_HIDDEN, () => false)
     await openPane($)
 
-    return { text: arg === 'habits' ? 'Prompt coach: habits.' : 'Prompt coach opened.' }
+    return { text: arg === 'habits' ? 'showing your habits.' : 'opened.' }
   })
 
   on('ui.close', { id: PANE }, async ($, e, next) => {
     await update($, PANE_OPEN, () => false)
 
     return next(e)
+  })
+
+  // Typing reaches the box as prompt.edit; prompt.change carries the rest
+  // (history recall, a fill). The check runs after the key lands, unawaited.
+  on('prompt.edit', async ($, e, next) => {
+    const r = await next(e)
+    void noteBox($, r.text)
+
+    return r
   })
 
   on('prompt.change', async ($, e, next) => {
@@ -520,7 +529,7 @@ export const register: Register = (on, options) => {
       read($, TICK),
     ])
     const now = Math.max(tick, await $.clock.now())
-    const width = Math.max(20, (e.viewport?.columns ?? e.props.bodyColumns ?? 50) - 2)
+    const width = Math.max(20, e.props.bodyColumns ?? (e.viewport?.columns ?? 50) - 2)
     const rows = e.viewport?.rows ?? 30
     const isNarrow = width < NARROW
     const here = all.filter(x => x.project === project)

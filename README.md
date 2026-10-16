@@ -10,6 +10,10 @@ It has two goals:
 1. **Habits.** You pick up the habits that make Claude Code work well, and keep them.
 2. **Results.** Each prompt gets a better result, ideally before you send it.
 
+![The prompt coach sidebar reviewing a prompt: the next step, a better prompt with the added words in green, and the habits it missed](docs/review.png)
+
+The screenshots use a made-up project, `acme-shop`.
+
 ## Install
 
 At the prompt of a Claude Code terminal session:
@@ -37,11 +41,15 @@ then **Plugins**, then **Add marketplace** with `OlivierAlter/prompt-coach`, the
 - **Tracks seven habits:** target, goal, evidence, verify, constraints, scope and plan.
   The **Habits** view shows your hit rate and trend for each habit, and picks one to
   focus on. Keep your focus habit for 3 prompts in a row and it graduates (★).
+
+  ![The Habits view: a focus habit, a hit-rate bar for each habit, and a CLAUDE.md suggestion](docs/habits.png)
 - **Improves your draft** before you send it. Missing facts become `[placeholders]`
   rather than guesses, and Undo puts your draft back.
 - **Checks your draft as you type**, with no model call. It flags a draft that names
   no file, pastes no error, gives Claude no way to check its work, or asks for a big
   change without a plan.
+
+  ![The draft check above the prompt box: "no file named · big change: ask for a plan", with an Improve draft button](docs/draft-check.png)
 - **Suggests CLAUDE.md lines.** When you give the same standing instruction twice
   ("use pnpm, not npm"), it offers to have Claude add it to CLAUDE.md.
 - **Learns from your ratings.** Mark a review Helpful (`y`) or Not helpful (`n`),

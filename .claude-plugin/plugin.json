@@ -1,6 +1,6 @@
 {
   "name": "prompt-coach",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A sidebar that reviews each prompt, tracks your prompting habits, and improves your draft before you send it",
   "author": {
     "name": "OlivierAlter"

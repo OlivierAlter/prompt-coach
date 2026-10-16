@@ -51,6 +51,11 @@ function world(on: On, replies: string[], answer?: (call: number) => Promise<str
   })
   on('prompt.submit', async (_$, e) => ({ text: e.text }))
   on('prompt.change', async (_$, e) => ({ text: e.text }))
+  on('prompt.edit', async (_$, e) => {
+    const text = e.text.slice(0, e.start) + e.inputText + e.text.slice(e.end)
+
+    return { text, cursor: e.start + e.inputText.length }
+  })
   on('tool.call', async () => ({ result: 'ok' }) as never)
   on('turn.complete', async (_$, e) => ({ text: e.answer }))
   on('ui.toast', async (_$, e) => {
@@ -79,10 +84,18 @@ async function turn($: Engine, prompt: string, answer = 'Done.') {
 
 // Types into the box, as the person would.
 async function type($: Engine, w: { box: string }, text: string) {
+  // Typing is one prompt.edit: the whole text spliced over the old draft.
+  const before = w.box
   w.box = text
-  // The engine raises prompt.change on each edit; the test kit's noun is untyped.
-  const prompt = $.prompt as unknown as { change: (e: unknown) => Promise<unknown> }
-  await prompt.change({ text, cursor: text.length, origin: { kind: 'app' } })
+  const prompt = $.prompt as unknown as { edit: (e: unknown) => Promise<unknown> }
+  await prompt.edit({
+    origin: { kind: 'composer' },
+    text: before,
+    cursor: before.length,
+    start: 0,
+    end: before.length,
+    inputText: text,
+  })
 }
 
 async function until(ui: Ui, check: () => Promise<unknown> | unknown) {
